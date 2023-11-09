@@ -1,16 +1,10 @@
 const fs = require("node:fs");
 
-fs.readdir(".", (err, files) => {
-  if (err) {
-    console.log("err: ", err);
-    return;
-  }
-  console.log("files: ", files);
-  fs.readFile(files[0], { encoding: "utf-8" }, (err, content) => {
-    if (err) {
-      console.log("err: ", err);
-      return;
-    }
+ try {
+    const files = await fs.readdirSync(".");
+    console.log("files: ", files);
+    const content = await fs.readFileSync(files[0], { encoding: "utf-8" });
     console.log("content: ", content);
-  });
-});
+  } catch (err) {
+    console.log("err: ", err);
+  }
